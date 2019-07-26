@@ -169,8 +169,7 @@ window.onload = function() {
         e.preventDefault();    //stop form from submitting
     });
 
-    var clearButton = document.getElementById("clear");
-    clearButton.addEventListener("click", function() {
+    function clearValues() {
         for(var i = 1; i <= 8; i++) {
             document.getElementById("room" + i).value = '';
         }
@@ -185,7 +184,15 @@ window.onload = function() {
         managerCheck.checked = false;
         numberOfRoomsInput.value = 8;
         roomNumUpdate();
-    }, false)
+    }
+
+    var clearButton = document.getElementById("clear");
+    clearButton.addEventListener("click", clearValues, false)
+    form.addEventListener("keyup", function(e) {
+        if(e.key == "Delete") {
+            clearValues();
+        }
+    }, false);
 
     roomNumUpdate();
 }
