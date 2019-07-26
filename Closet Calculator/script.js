@@ -53,11 +53,13 @@ window.onload = function() {
     var discountAfterDisplay = document.getElementById("discountAfter");
     var sundayCheck = document.getElementById("sunday");
     var managerCheck = document.getElementById("manager");
+    var numberOfRoomsInput = document.getElementById("numberOfRooms");
+    var updateRoomsButton = document.getElementById("roomNumUpdate");
 
     function calculate() {
         var total = 0;
         var temp;
-        for(var i = 1; i <= 8; i++) {
+        for(var i = 1; i <= numberOfRoomsInput.value; i++) {
             temp = document.getElementById("room" + i).value;
             if(temp == '') {
                 temp = 0;
@@ -124,6 +126,45 @@ window.onload = function() {
         form.attachEvent('onsubmit', calculate);            //Old IE
     }
 
+    function roomNumUpdate() {
+        var rooms = document.getElementById("rooms");
+        var numberOfRooms = numberOfRoomsInput.value;
+        while(numberOfRooms < rooms.children.length) {
+            rooms.removeChild(rooms.lastChild);
+        }
+        var parentDiv;
+        var label;
+        var input;
+        for(var i = rooms.children.length+1; i <= numberOfRooms; i++) {
+            parentDiv = document.createElement("div");
+            label = document.createElement("label");
+            label.innerHTML = "Room " + i + ": $ ";
+            input = document.createElement("input");
+            input.setAttribute("type", "number");
+            input.setAttribute("min", "0");
+            input.setAttribute("setp", "0.01");
+            input.setAttribute("id", "room"+i);
+            parentDiv.appendChild(label);
+            parentDiv.appendChild(input);
+            rooms.appendChild(parentDiv);
+        }
+    }
+
+    updateRoomsButton.addEventListener("click", roomNumUpdate, false);
+
+    numberOfRoomsInput.addEventListener("keyup", function(e) {
+        if(e.key == "Enter") {
+            roomNumUpdate();
+            e.preventDefault();
+        }
+    });
+
+    numberOfRoomsInput.addEventListener("keydown", function(e) {
+        if(e.key == "Enter") {
+            e.preventDefault();
+        }
+    });
+
     document.querySelector("form").addEventListener("submit", function(e){
         e.preventDefault();    //stop form from submitting
     });
@@ -142,7 +183,11 @@ window.onload = function() {
         document.getElementById("percent30").checked = true;
         sundayCheck.checked = false;
         managerCheck.checked = false;
+        numberOfRoomsInput.value = 8;
+        roomNumUpdate();
     }, false)
+
+    roomNumUpdate();
 }
 
 
