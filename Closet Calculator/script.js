@@ -50,6 +50,7 @@ window.onload = function() {
     var discountDisplay = document.getElementById("discountTotal");
     var commissionPercentDisplay = document.getElementById("percentCommission");
     var commissionDisplay = document.getElementById("moneyCommission");
+    var discountAfterDisplay = document.getElementById("discountAfter");
     var sundayCheck = document.getElementById("sunday");
     var managerCheck = document.getElementById("manager");
 
@@ -77,6 +78,7 @@ window.onload = function() {
         var percentOffPrice = (1-(discount/100)) * total;
         discountDisplay.innerHTML = Math.round(percentOffPrice*100)/100;
         var discountAfter = Math.round((1 - soldPrice/percentOffPrice)*100);
+        discountAfterDisplay.innerHTML = discountAfter;
 
         var commissionPercent;
         if(sundayCheck.checked) {
@@ -136,6 +138,7 @@ window.onload = function() {
         discountDisplay.innerHTML = '';
         commissionPercentDisplay.innerHTML = '';
         commissionDisplay.innerHTML = '';
+        discountAfterDisplay.innerHTML = '';
         document.getElementById("percent30").checked = true;
         sundayCheck.checked = false;
         managerCheck.checked = false;
