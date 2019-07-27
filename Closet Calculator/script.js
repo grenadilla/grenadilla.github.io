@@ -52,7 +52,6 @@ window.onload = function() {
     var commissionDisplay = document.getElementById("moneyCommission");
     var discountAfterDisplay = document.getElementById("discountAfter");
     var sundayCheck = document.getElementById("sunday");
-    var managerCheck = document.getElementById("manager");
     var numberOfRoomsInput = document.getElementById("numberOfRooms");
     var updateRoomsButton = document.getElementById("roomNumUpdate");
 
@@ -72,19 +71,20 @@ window.onload = function() {
         }
         var soldPrice = parseFloat(temp);
         temp = document.querySelector('input[name="discount"]:checked').value;
-        if(temp == '') {
-            temp = 0;
-        }
         var discount = parseFloat(temp);
         totalDisplay.innerHTML = total;
         var percentOffPrice = (1-(discount/100)) * total;
         discountDisplay.innerHTML = Math.round(percentOffPrice*100)/100;
         var discountAfter = Math.round((1 - soldPrice/percentOffPrice)*100);
         discountAfterDisplay.innerHTML = discountAfter;
+        var employeeType = document.querySelector('input[name="employeeType"]:checked').value;
 
         var commissionPercent;
         if(sundayCheck.checked) {
             commissionPercent = 12;
+        }
+        else if(employeeType == "new") {
+            commissionPercent = 5;
         }
         else if(discount === 30) {
             if(discountAfter > 39) {
@@ -102,7 +102,7 @@ window.onload = function() {
                 commissionPercent = 3;
             }
             else if(discountAfter < 10) {
-                if(managerCheck.checked) {
+                if(employeeType == "manager") {
                     commissionPercent = 12;
                 }
                 else {
@@ -111,7 +111,7 @@ window.onload = function() {
             }
             else {
                 commissionPercent = commissionRate40[discountAfter];
-                if(managerCheck.checked && commissionPercent == 10) {
+                if(employeeType == "manager" && commissionPercent == 10) {
                     commissionPercent = 11;
                 }
             }
@@ -180,6 +180,7 @@ window.onload = function() {
         commissionDisplay.innerHTML = '';
         discountAfterDisplay.innerHTML = '';
         document.getElementById("percent30").checked = true;
+        document.getElementById("regularEmployee").checked = true;
         sundayCheck.checked = false;
         managerCheck.checked = false;
         numberOfRoomsInput.value = 8;
