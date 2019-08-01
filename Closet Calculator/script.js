@@ -179,10 +179,14 @@ window.onload = function() {
         total += document.getElementById("bridgeShelf").value * 47;
         total += document.getElementById("LShelf").value * 150;
 
-        total += document.getElementById("rodChromeTo").value * 70;
-        total += document.getElementById("rodChromeOver").value * 84;
-        total += document.getElementById("rodSpecialTo").value * 97;
-        total += document.getElementById("rodSpecialOver").value * 119;
+        total += document.getElementById("rodOvalChromeTo").value * 70;
+        total += document.getElementById("rodOvalChromeOver").value * 84;
+        total += document.getElementById("rodOvalSpecialTo").value * 97;
+        total += document.getElementById("rodOvalSpecialOver").value * 119;
+        total += document.getElementById("rodRoundChromeTo").value * 132;
+        total += document.getElementById("rodRoundChromeOver").value * 165;
+        total += document.getElementById("rodRoundSpecialTo").value * 176;
+        total += document.getElementById("rodRoundSpecialOver").value * 187;
 
         total += document.getElementById("door24").value * 160;
         total += document.getElementById("door36").value * 200;
