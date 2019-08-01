@@ -131,11 +131,64 @@ window.onload = function() {
         
         document.getElementById("roomCalculatorNum").innerHTML = roomNum;
         document.getElementById("closetPriceSpace").style.display = "inline-block";
-
     }
 
     function calculateRoomPrice() {
         var total = 0;
+
+        total += document.getElementById("panel12Full").value * 225;
+        total += document.getElementById("panel12Half").value * 140;
+        total += document.getElementById("panel12Quarter").value * 122;
+        total += document.getElementById("panel16Full").value * 280;
+        total += document.getElementById("panel16Half").value * 173;
+        total += document.getElementById("panel16Quarter").value * 145;
+        total += document.getElementById("panel20Full").value * 308;
+        total += document.getElementById("panel20Half").value * 196;
+        total += document.getElementById("panel20Quarter").value * 168;
+        total += document.getElementById("panel24Full").value * 345;
+        total += document.getElementById("panel24Half").value * 224;
+        total += document.getElementById("panel24Quarter").value * 192;
+        total += document.getElementById("panel32Full").value * 369;
+        total += document.getElementById("panel32Half").value * 258;
+        total += document.getElementById("panel32Quarter").value * 215;
+
+        total += document.getElementById("shelf12To").value * 38;
+        total += document.getElementById("shelf12Over").value * 47;
+        total += document.getElementById("shelf16To").value * 44;
+        total += document.getElementById("shelf16Over").value * 56;
+        total += document.getElementById("shelf20To").value * 48;
+        total += document.getElementById("shelf20Over").value * 66;
+        total += document.getElementById("shelf24To").value * 55;
+        total += document.getElementById("shelf24Over").value * 72;
+        total += document.getElementById("shelf32To").value * 65;
+        total += document.getElementById("shelf32Over").value * 88;
+
+        total += document.getElementById("bridgeShelf").value * 47;
+        total += document.getElementById("LShelf").value * 150;
+
+        total += document.getElementById("rodChromeTo").value * 70;
+        total += document.getElementById("rodChromeOver").value * 84;
+        total += document.getElementById("rodSpecialTo").value * 97;
+        total += document.getElementById("rodSpecialOver").value * 119;
+
+        total += document.getElementById("door24").value * 160;
+        total += document.getElementById("door36").value * 200;
+        total += document.getElementById("door48").value * 220;
+        total += document.getElementById("door60").value * 240;
+        total += document.getElementById("door84").value * 300;
+        total += document.getElementById("door96").value * 320;
+
+        total += document.getElementById("drawers").value * 210;
+        total += document.getElementById("fileDrawers").value * 300;
+
+        total += document.getElementById("hamper24").value * 360;
+        total += document.getElementById("hamper30").value * 440;
+
+        total += document.getElementById("accent18").value * 30;
+        total += document.getElementById("accent24").value * 34;
+        total += document.getElementById("supportCleats").value * 40;
+        total += document.getElementById("baseboardCleats").value * 20;
+        total += document.getElementById("fillerStrip").value * 50;
 
         var roomNum = parseInt(document.getElementById("roomCalculatorNum").innerHTML);
         var input = document.getElementById("room" + roomNum);
