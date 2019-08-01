@@ -135,6 +135,10 @@ window.onload = function() {
         var input = document.getElementById("room" + roomNum);
     }
 
+    document.getElementById("cancelRoom").addEventListener("click", function() {
+        document.getElementById("closetPriceSpace").style.display = "none";
+    }, false);
+
     function roomNumUpdate() {
         var rooms = document.getElementById("rooms");
         var numberOfRooms = numberOfRoomsInput.value;
