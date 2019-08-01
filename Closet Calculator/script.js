@@ -130,7 +130,7 @@ window.onload = function() {
         var roomNum = parseInt(this.id.substring(8, this.id.length));
         
         document.getElementById("roomCalculatorNum").innerHTML = roomNum;
-        document.getElementById("closetPriceSpace").style.visibility = "visible";
+        document.getElementById("closetPriceSpace").style.display = "inline-block";
 
         var input = document.getElementById("room" + roomNum);
     }

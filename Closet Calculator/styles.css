@@ -4,5 +4,6 @@
 }
 
 #closetPriceSpace {
-    visibility: hidden;
+    float: left;
+    display: none;
 }
