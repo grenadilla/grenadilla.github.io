@@ -126,6 +126,15 @@ window.onload = function() {
         form.attachEvent('onsubmit', calculate);            //Old IE
     }
 
+    function getButtonPrice() {
+        var roomNum = parseInt(this.id.substring(8, this.id.length));
+        
+        document.getElementById("roomCalculatorNum").innerHTML = roomNum;
+        document.getElementById("closetPriceSpace").style.visibility = "visible";
+
+        var input = document.getElementById("room" + roomNum);
+    }
+
     function roomNumUpdate() {
         var rooms = document.getElementById("rooms");
         var numberOfRooms = numberOfRoomsInput.value;
@@ -135,6 +144,7 @@ window.onload = function() {
         var parentDiv;
         var label;
         var input;
+        var button;
         for(var i = rooms.children.length+1; i <= numberOfRooms; i++) {
             parentDiv = document.createElement("div");
             label = document.createElement("label");
@@ -144,8 +154,14 @@ window.onload = function() {
             input.setAttribute("min", "0");
             input.setAttribute("setp", "0.01");
             input.setAttribute("id", "room"+i);
+            button = document.createElement("button");
+            button.setAttribute("type", "button");
+            button.setAttribute("id", "getPrice" + i);
+            button.innerHTML = "Calculate Price";
+            button.addEventListener("click", getButtonPrice, false);
             parentDiv.appendChild(label);
             parentDiv.appendChild(input);
+            parentDiv.appendChild(button);
             rooms.appendChild(parentDiv);
         }
     }
