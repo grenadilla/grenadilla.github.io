@@ -44,6 +44,8 @@ var commissionRate40 = {
     29: 3,
 }
 
+var roomsInputArray = [];
+
 window.onload = function() {
     var form = document.getElementById("form");
     var totalDisplay = document.getElementById("total");
@@ -54,6 +56,10 @@ window.onload = function() {
     var sundayCheck = document.getElementById("sunday");
     var numberOfRoomsInput = document.getElementById("numberOfRooms");
     var updateRoomsButton = document.getElementById("roomNumUpdate");
+
+    var emptyRoomForm = document.createElement("div");
+    emptyRoomForm.innerHTML = document.getElementById("closetPriceSpace").innerHTML;
+    
 
     function calculate() {
         var total = 0;
@@ -126,14 +132,16 @@ window.onload = function() {
         form.attachEvent('onsubmit', calculate);            //Old IE
     }
 
-    function getButtonPrice() {
-        var roomNum = parseInt(this.id.substring(8, this.id.length));
-        
-        document.getElementById("roomCalculatorNum").innerHTML = roomNum;
-        document.getElementById("closetPriceSpace").style.display = "inline-block";
+    function saveRoomInfo() {
+        //Save current open room calculator
+        var currentRoomInput = document.getElementById("closetPriceSpace");
+        if(currentRoomInput.style.display === "inline-block") {
+            roomsInputArray[parseInt(document.getElementById("roomCalculatorNum").innerHTML)-1] = currentRoomInput.cloneNode(true);
+        }
     }
 
     function calculateRoomPrice() {
+        saveRoomInfo();
         var total = 0;
 
         total += document.getElementById("panel12Full").value * 225;
@@ -195,23 +203,49 @@ window.onload = function() {
         input.value = total;
     }
 
-    document.getElementById("calculateRoom").addEventListener("click", calculateRoomPrice, false);
+    function getButtonPrice() {
+        var roomNum = parseInt(this.id.substring(8, this.id.length));
 
-    document.getElementById("cancelRoom").addEventListener("click", function() {
-        document.getElementById("closetPriceSpace").style.display = "none";
-    }, false);
+        saveRoomInfo();
+
+        //document.getElementById("roomCalculatorNum").innerHTML = roomNum;
+
+        //Load room calculator
+        var priceSpace = document.getElementById("closetPriceSpace");
+        priceSpace.innerHTML = roomsInputArray[roomNum-1].innerHTML;
+        for (let input of priceSpace.getElementsByTagName("input")) {
+            input.addEventListener("change", function() {
+                input.setAttribute("value", input.value);
+            }, false);
+        }
+        document.getElementById("calculateRoom").addEventListener("click", calculateRoomPrice, false);
+
+        document.getElementById("cancelRoom").addEventListener("click", function() {
+            saveRoomInfo();
+            document.getElementById("closetPriceSpace").style.display = "none";
+        }, false);
+        priceSpace.style.display = "inline-block";
+    }
 
     function roomNumUpdate() {
         var rooms = document.getElementById("rooms");
         var numberOfRooms = numberOfRoomsInput.value;
         while(numberOfRooms < rooms.children.length) {
             rooms.removeChild(rooms.lastChild);
+            roomsInputArray.pop();
         }
         var parentDiv;
         var label;
         var input;
         var button;
+        var newRoomForm;
         for(var i = rooms.children.length+1; i <= numberOfRooms; i++) {
+            newRoomForm = document.createElement("div");
+            newRoomForm.innerHTML = emptyRoomForm.innerHTML;
+            newRoomForm.getElementsByTagName("span")[0].innerHTML = i;
+            
+            roomsInputArray.push(newRoomForm);
+
             parentDiv = document.createElement("div");
             label = document.createElement("label");
             label.innerHTML = "Room " + i + ": $ ";
