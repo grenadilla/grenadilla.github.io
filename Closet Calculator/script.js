@@ -44,8 +44,6 @@ var commissionRate40 = {
     29: 3,
 }
 
-var roomsInputArray = [];
-
 window.onload = function() {
     var form = document.getElementById("form");
     var totalDisplay = document.getElementById("total");
@@ -57,9 +55,11 @@ window.onload = function() {
     var numberOfRoomsInput = document.getElementById("numberOfRooms");
     var updateRoomsButton = document.getElementById("roomNumUpdate");
 
-    var emptyRoomForm = document.createElement("div");
-    emptyRoomForm.innerHTML = document.getElementById("closetPriceSpace").innerHTML;
-    
+    var emptyRoomForm = {};
+    var roomsInputArray = [];
+    for(let input of document.getElementById("closetPriceSpace").getElementsByTagName("input")) {
+        emptyRoomForm[input.id] = parseInt(input.value);
+    }
 
     function calculate() {
         var total = 0;
@@ -136,7 +136,12 @@ window.onload = function() {
         //Save current open room calculator
         var currentRoomInput = document.getElementById("closetPriceSpace");
         if(currentRoomInput.style.display === "inline-block") {
-            roomsInputArray[parseInt(document.getElementById("roomCalculatorNum").innerHTML)-1] = currentRoomInput.cloneNode(true);
+            var currentRoomData = {}
+            for(let input of document.getElementById("closetPriceSpace").getElementsByTagName("input")) {
+                currentRoomData[input.id] = parseInt(input.value);
+            }
+            var roomNum = parseInt(document.getElementById("roomCalculatorNum").innerHTML)
+            roomsInputArray[roomNum-1] = currentRoomData;
         }
     }
 
@@ -204,28 +209,27 @@ window.onload = function() {
     }
 
     function getButtonPrice() {
-        var roomNum = parseInt(this.id.substring(8, this.id.length));
-
         saveRoomInfo();
 
-        //document.getElementById("roomCalculatorNum").innerHTML = roomNum;
-
+        var roomNum = parseInt(this.id.substring(8, this.id.length));
         //Load room calculator
         var priceSpace = document.getElementById("closetPriceSpace");
-        priceSpace.innerHTML = roomsInputArray[roomNum-1].innerHTML;
-        for (let input of priceSpace.getElementsByTagName("input")) {
-            input.addEventListener("change", function() {
-                input.setAttribute("value", input.value);
-            }, false);
+        
+        var currentRoomData = roomsInputArray[roomNum-1];
+        for (var property in currentRoomData) {
+            document.getElementById(property).value = currentRoomData[property];
         }
-        document.getElementById("calculateRoom").addEventListener("click", calculateRoomPrice, false);
-
-        document.getElementById("cancelRoom").addEventListener("click", function() {
-            saveRoomInfo();
-            document.getElementById("closetPriceSpace").style.display = "none";
-        }, false);
+        document.getElementById("roomCalculatorNum").innerHTML = roomNum;
+        
         priceSpace.style.display = "inline-block";
     }
+
+    document.getElementById("calculateRoom").addEventListener("click", calculateRoomPrice, false);
+
+    document.getElementById("cancelRoom").addEventListener("click", function() {
+        saveRoomInfo();
+        document.getElementById("closetPriceSpace").style.display = "none";
+    }, false);
 
     function roomNumUpdate() {
         var rooms = document.getElementById("rooms");
@@ -240,9 +244,10 @@ window.onload = function() {
         var button;
         var newRoomForm;
         for(var i = rooms.children.length+1; i <= numberOfRooms; i++) {
-            newRoomForm = document.createElement("div");
-            newRoomForm.innerHTML = emptyRoomForm.innerHTML;
-            newRoomForm.getElementsByTagName("span")[0].innerHTML = i;
+            newRoomForm = {}
+            for (var property in emptyRoomForm) {
+                newRoomForm[property] = emptyRoomForm[property];
+            }
             
             roomsInputArray.push(newRoomForm);
 
@@ -288,8 +293,9 @@ window.onload = function() {
     function clearValues() {
         for(var i = 1; i <= rooms.children.length; i++) {
             document.getElementById("room" + i).value = '';
-            roomsInputArray[i-1].innerHTML = emptyRoomForm.innerHTML;
-            roomsInputArray[i-1].getElementsByTagName("span")[0].innerHTML = i;
+            for (var property in emptyRoomForm) {
+                roomsInputArray[i-1][property] = emptyRoomForm[property];
+            }
         }
         document.getElementById("closetPriceSpace").style.display = "none";
         document.getElementById("soldPrice").value = '';
