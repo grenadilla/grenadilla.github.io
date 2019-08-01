@@ -286,9 +286,12 @@ window.onload = function() {
     });
 
     function clearValues() {
-        for(var i = 1; i <= 8; i++) {
+        for(var i = 1; i <= rooms.children.length; i++) {
             document.getElementById("room" + i).value = '';
+            roomsInputArray[i-1].innerHTML = emptyRoomForm.innerHTML;
+            roomsInputArray[i-1].getElementsByTagName("span")[0].innerHTML = i;
         }
+        document.getElementById("closetPriceSpace").style.display = "none";
         document.getElementById("soldPrice").value = '';
         totalDisplay.innerHTML = '';
         discountDisplay.innerHTML = '';
@@ -298,7 +301,6 @@ window.onload = function() {
         document.getElementById("percent30").checked = true;
         document.getElementById("regularEmployee").checked = true;
         sundayCheck.checked = false;
-        managerCheck.checked = false;
         numberOfRoomsInput.value = 8;
         roomNumUpdate();
     }
