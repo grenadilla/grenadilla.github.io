@@ -132,8 +132,17 @@ window.onload = function() {
         document.getElementById("roomCalculatorNum").innerHTML = roomNum;
         document.getElementById("closetPriceSpace").style.display = "inline-block";
 
-        var input = document.getElementById("room" + roomNum);
     }
+
+    function calculateRoomPrice() {
+        var total = 0;
+
+        var roomNum = parseInt(document.getElementById("roomCalculatorNum").innerHTML);
+        var input = document.getElementById("room" + roomNum);
+        input.value = total;
+    }
+
+    document.getElementById("calculateRoom").addEventListener("click", calculateRoomPrice, false);
 
     document.getElementById("cancelRoom").addEventListener("click", function() {
         document.getElementById("closetPriceSpace").style.display = "none";
