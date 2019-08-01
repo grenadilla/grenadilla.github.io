@@ -216,6 +216,7 @@ window.onload = function() {
         saveRoomInfo();
 
         var roomNum = parseInt(this.id.substring(8, this.id.length));
+
         //Load room calculator
         var priceSpace = document.getElementById("closetPriceSpace");
         
@@ -230,9 +231,19 @@ window.onload = function() {
 
     document.getElementById("calculateRoom").addEventListener("click", calculateRoomPrice, false);
 
-    document.getElementById("cancelRoom").addEventListener("click", function() {
+    document.getElementById("closeRoom").addEventListener("click", function() {
         saveRoomInfo();
         document.getElementById("closetPriceSpace").style.display = "none";
+    }, false);
+
+    document.getElementById("clearRoom").addEventListener("click", function() {
+        var roomNum = parseInt(document.getElementById("roomCalculatorNum").innerHTML);
+        for (var property in emptyRoomForm) {
+            roomsInputArray[roomNum-1][property] = emptyRoomForm[property];
+            document.getElementById(property).value = emptyRoomForm[property];
+        }
+        var input = document.getElementById("room" + roomNum);
+        input.value = '';
     }, false);
 
     function roomNumUpdate() {
